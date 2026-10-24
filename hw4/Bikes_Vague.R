@@ -4,15 +4,15 @@ bikes.y <- c(16,9,10,13,19,20,18,17,35,55)
 bikes.n <- c(74,99,58,70,121,77,104,129,308,119)
 logpost4 <- function(u, v) {a <- exp(u + v)/(exp(u) + 1);
 b <- exp(v)/(exp(u) + 1);
-J <- length(rat.y); # Number of data
+J <- length(bikes.y); # Number of data
 x <- J * (lgamma(a + b)- lgamma(a)- lgamma(b)) + log(a) + log(b)-2.5 * log(a + b); # Constants, Jaccobi and hyperprior
 for (i in (1:J)){
-  x <- x + lgamma(a + rat.y[i]) + lgamma(b + bikes.n[i] - bikes.y[i]) - 
-    lgamma(a + b + rat.n[i]) # Adding likelihood
+  x <- x + lgamma(a + bikes.y[i]) + lgamma(b + bikes.n[i] - bikes.y[i]) - 
+    lgamma(a + b + bikes.n[i]) # Adding likelihood
 }
 x # Return log p(theta, phi | y)
 }
-# Generate grid sampling
+# Genebikese grid sampling
 x4 <- c(-230:-50)/100 # set the grid values of u
 y4 <- c(100:500)/100 # set the grid values of v
 # evaluate grid
@@ -37,8 +37,8 @@ newb <- exp(newy)/(exp(newx)+1)
 
 # 1. 设定你要预测的组（比如第 5 组）
 j <- 5 
-yj <- rat.y[j]  
-nj <- rat.n[j]  
+yj <- bikes.y[j]  
+nj <- bikes.n[j]  
 
 # 2. 根据抽出来的 alpha 和 beta 样本，进行第二步抽样，生成 1000 个 theta 样本
 # 根据条件后验：theta | alpha, beta, y ~ Beta(alpha + yj, beta + nj - yj)
