@@ -7,7 +7,7 @@ rat.n <- c(20,20,20,20,20,20,20,19,19,19,19,18,18,17,20,20,20,20,19,19,
            18,18,25,24,23,20,20,20,20,20,20,10,49,19,46,27,17,49,47,20,
            20,13,48,50,20,20,20,20,20,20,20,48,19,19,19,22,46,49,20,20,
            23,19,22,20,20,20,52,47,46,24)
-logpost4 <- function(u, v) {a <- exp(u)*exp(v)/exp(u+v);
+logpost4 <- function(u, v) {a <- exp(u + v)/(exp(u) + 1);
 b <- exp(v)/(exp(u) + 1);
 J <- length(rat.y); # Number of data
 x <- J * (lgamma(a + b)- lgamma(a)- lgamma(b)) + log(a) + log(b)-2.5 * log(a + b); # Constants and hyperprior
