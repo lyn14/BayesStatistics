@@ -10,7 +10,7 @@ rat.n <- c(20,20,20,20,20,20,20,19,19,19,19,18,18,17,20,20,20,20,19,19,
 logpost4 <- function(u, v) {a <- exp(u + v)/(exp(u) + 1);
 b <- exp(v)/(exp(u) + 1);
 J <- length(rat.y); # Number of data
-x <- J * (lgamma(a + b)- lgamma(a)- lgamma(b)) + log(a) + log(b)-2.5 * log(a + b); # Constants and hyperprior
+x <- J * (lgamma(a + b)- lgamma(a)- lgamma(b)) + log(a) + log(b)-2.5 * log(a + b); # Constants, Jaccobi and hyperprior
 for (i in (1:J)){
   x <- x + lgamma(a + rat.y[i]) + lgamma(b + rat.n[i] - rat.y[i]) - 
     lgamma(a + b + rat.n[i]) # Adding likelihood

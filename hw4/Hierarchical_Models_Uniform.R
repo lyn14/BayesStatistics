@@ -13,7 +13,7 @@ J <- length(rat.y); # Number of data
 logp_a <- dunif(a , min = 0 , max = 40 , log = TRUE);
 logp_b <- dunif(b , min = 0 , max = 100 , log = TRUE);
 log_prior <- logp_a + logp_b;
-x <- J * (lgamma(a + b) - lgamma(a) - lgamma(b)) + log_prior;
+x <- J * (lgamma(a + b) - lgamma(a) - lgamma(b)) + log(a) + log(b) + log_prior;
 for (i in (1:J)){
   x <- x + lgamma(a + rat.y[i]) + lgamma(b + rat.n[i] - rat.y[i]) - 
     lgamma(a + b + rat.n[i]) # Adding likelihood
