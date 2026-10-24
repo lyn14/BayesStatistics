@@ -8,7 +8,7 @@
 | --- | --- |
 | `hw2/` | Poisson–Gamma 共轭推断、负二项后验预测、数值积分验证，以及课程 PDF |
 | `hw3/` | 通过离散网格抽样估计标准正态与均匀分布的前六阶原点矩，比较区间与网格点数的影响；附 PDF 和运行日志 |
-| `hw4/` | 大鼠肿瘤 Beta–Binomial 层次模型：vague prior 与均匀先验下的网格计算及等高线图 |
+| `hw4/` | 大鼠肿瘤与 BDA3 Exercise 5.13 自行车比例的 Beta–Binomial 层次模型：先验比较、网格抽样、可信区间及收缩估计 |
 
 ## 大鼠肿瘤数据
 
@@ -29,7 +29,19 @@
 - [Hierarchical_Models_Uniform.R](hw4/Hierarchical_Models_Uniform.R)：采用独立均匀先验 `a ~ Uniform(0,40)`、`b ~ Uniform(0,100)`。
 - 结果图：[vague prior](hw4/RatTumor_Vague.png)、[均匀先验](hw4/RatTumor_Uniform.png)。
 
-等高线数值为相对于网格最大值的密度高度，未归一化为概率，也不代表可信区域的概率。当前均匀先验脚本未加入 Jacobian 项，绘制的是 `(a,b)` 后验密度在 `(u,v)` 网格上的取值；若要与 vague prior 图作为 `(u,v)` 后验密度比较，需先补入 `log(a) + log(b)`。
+等高线数值为相对于网格最大值的密度高度，未归一化为概率，也不代表可信区域的概率。两份大鼠脚本均已加入坐标变换的 Jacobian 项 `log(a) + log(b)`。
+
+## hw4：BDA3 Exercise 5.13 — 自行车比例
+
+使用 10 组车辆计数数据，`bikes.y[j]` 为第 `j` 组自行车数量，`bikes.n[j]` 为该组车辆总数，`theta[j]` 为自行车所占比例。沿用 Beta–Binomial 层次模型，比较 vague hyperprior 与独立均匀超先验对后验推断的影响。
+
+| 程序 | 内容 | 已保存的结果图 |
+| --- | --- | --- |
+| [Bikes_Vague.R](hw4/Bikes_Vague.R) | vague prior 下的超参数后验等高线、网格抽样及第 5 组比例的 95% 等尾可信区间 | [等高线](hw4/Bikes_Vague.png)、[区间与后验直方图](hw4/Interval_Vague.png) |
+| [Bikes_Uniform.R](hw4/Bikes_Uniform.R) | 均匀先验下的对应计算 | [等高线](hw4/Bikes_Uniform.png)、[区间与后验直方图](hw4/Interval_Uniform.png) |
+| [Bikes_Expectation.R](hw4/Bikes_Expectation.R) | 通过 1000 次超参数网格抽样，平均条件期望 `(a+y[j])/(a+b+n[j])`，估计各组后验均值并与 MLE `y[j]/n[j]` 比较；随机种子为 `123` | [后验均值与 MLE](hw4/Means.png) |
+
+当前实现注意：`Bikes_Vague.R` 与 `Bikes_Uniform.R` 仍有 `rat.y/rat.n` 引用，需统一为 `bikes.y/bikes.n` 才能在干净的 R 会话中正确使用自行车数据；`Bikes_Expectation.R` 的均匀先验分支尚未加入 `log(a)+log(b)`，且使用的 `u` 网格为 `[-2.3,-1.3]`，应补齐变换项并检查网格对后验的覆盖后再解释两种先验的差异。上述图片为已提交的结果，未在本次文档更新中重新生成。
 
 ## 运行
 
@@ -49,8 +61,11 @@ hw4 使用 R 基础函数，无需额外安装 R 包。在 R / RStudio 中打开
 ```bash
 Rscript hw4/Hierarchical_Models_Vague.R
 Rscript hw4/Hierarchical_Models_Uniform.R
+Rscript hw4/Bikes_Expectation.R
 ```
 
-交互式运行时显示等高线图；通过 `Rscript` 运行时，默认图形设备通常将图写入当前目录的 `Rplots.pdf`，连续运行可能覆盖该文件。脚本不会自动更新仓库中已有的 PNG 图。
+修正上述数据引用后，也可分别运行 `Rscript hw4/Bikes_Vague.R` 与 `Rscript hw4/Bikes_Uniform.R`。
+
+交互式运行时显示相应图形；通过 `Rscript` 运行时，默认图形设备通常将图写入当前目录的 `Rplots.pdf`，连续运行可能覆盖该文件。脚本不会自动更新仓库中已有的 PNG 图。
 
 本仓库用于课程学习与数值实验，代码随学习进度更新。
