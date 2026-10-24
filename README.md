@@ -12,7 +12,7 @@
 
 ## 大鼠肿瘤数据
 
-`hw4/Hierarchical_Models_lec.R` 中的数据来自 Gelman 等人的《Bayesian Data Analysis》第三版（BDA3）第 5 章表 5.1 的大鼠肿瘤示例，历史实验数据源自 Tarone（1982）。教材示例包含 70 组历史实验及一组新增实验，用于说明二项分布的层次贝叶斯建模。
+`hw4/Hierarchical_Models_Vague.R` 中的数据来自 Gelman 等人的《Bayesian Data Analysis》第三版（BDA3）第 5 章表 5.1 的大鼠肿瘤示例，历史实验数据源自 Tarone（1982）。教材示例包含 70 组历史实验及一组新增实验，用于说明二项分布的层次贝叶斯建模。
 
 - `rat.y[j]`：第 `j` 组实验中出现肿瘤的大鼠数量。
 - `rat.n[j]`：第 `j` 组实验的大鼠总数。
@@ -25,7 +25,7 @@
 
 使用上述 70 组历史实验数据，建立 `y[j] ~ Binomial(n[j], theta[j])`、`theta[j] ~ Beta(a, b)` 的层次模型。积分消去各组的 `theta[j]` 后，在 `u = log(a/b)`、`v = log(a+b)` 坐标下进行网格计算并绘制等高线。
 
-- [Hierarchical_Models_lec.R](hw4/Hierarchical_Models_lec.R)：采用 BDA3 的 vague hyperprior，`p(a,b) ∝ (a+b)^(-5/2)`，并加入坐标变换的 Jacobian 项 `log(a) + log(b)`。
+- [Hierarchical_Models_Vague.R](hw4/Hierarchical_Models_Vague.R)：采用 BDA3 的 vague hyperprior，`p(a,b) ∝ (a+b)^(-5/2)`，并加入坐标变换的 Jacobian 项 `log(a) + log(b)`。
 - [Hierarchical_Models_Uniform.R](hw4/Hierarchical_Models_Uniform.R)：采用独立均匀先验 `a ~ Uniform(0,40)`、`b ~ Uniform(0,100)`。
 - 结果图：[vague prior](hw4/RatTumor_Vague.png)、[均匀先验](hw4/RatTumor_Uniform.png)。
 
@@ -47,7 +47,7 @@ python hw3/grid_moments.py
 hw4 使用 R 基础函数，无需额外安装 R 包。在 R / RStudio 中打开脚本运行，或在仓库根目录执行：
 
 ```bash
-Rscript hw4/Hierarchical_Models_lec.R
+Rscript hw4/Hierarchical_Models_Vague.R
 Rscript hw4/Hierarchical_Models_Uniform.R
 ```
 
