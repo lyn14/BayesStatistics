@@ -41,7 +41,6 @@
 | [Bikes_Uniform.R](hw4/Bikes_Uniform.R) | 均匀先验下的对应计算 | [等高线](hw4/Bikes_Uniform.png)、[区间与后验直方图](hw4/Interval_Uniform.png) |
 | [Bikes_Expectation.R](hw4/Bikes_Expectation.R) | 通过 1000 次超参数网格抽样，平均条件期望 `(a+y[j])/(a+b+n[j])`，估计各组后验均值并与 MLE `y[j]/n[j]` 比较；随机种子为 `123` | [后验均值与 MLE](hw4/Means.png) |
 
-当前实现注意：`Bikes_Vague.R` 与 `Bikes_Uniform.R` 仍有 `rat.y/rat.n` 引用，需统一为 `bikes.y/bikes.n` 才能在干净的 R 会话中正确使用自行车数据；`Bikes_Expectation.R` 的均匀先验分支尚未加入 `log(a)+log(b)`，且使用的 `u` 网格为 `[-2.3,-1.3]`，应补齐变换项并检查网格对后验的覆盖后再解释两种先验的差异。上述图片为已提交的结果，未在本次文档更新中重新生成。
 
 ## 运行
 
